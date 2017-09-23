@@ -1,0 +1,12 @@
+name: strong-lenses
+dependencies:
+    - python
+    - numpy
+    - matplotlib
+    - jupyter
+    - scikit-learn
+    - seaborn
+    - pandas
+    - pip:
+        - tensorflow-gpu==1.2.0
+        - keras
