@@ -46,7 +46,7 @@ def train(compiled_model, epochs, trainX_file, trainY_file,
 			model.fit(trainX, trainY, epochs=epochs,
 						validation_data=(validX, validY))
 	except KeyboardInterrupt:
-		print('KeyboardInterrupt - returning current model')
+		#print('KeyboardInterrupt - returning current model')
 		return model
 
 	return model
@@ -177,7 +177,7 @@ def epoch_curve(model_function, data, labels, validation_fraction,
 	if type(evaluation_functions) is not list:
 		evaluation_functions = [evaluation_functions]
 
-	model = train(model_function(data.shape[1:]), epochs_to_try[0], Xtrain, Ytrain)
+	model = train(model_function(), epochs_to_try[0], Xtrain, Ytrain)
 
 	test_results = [[]] * len(evaluation_functions)
 	epochs = []
@@ -197,8 +197,8 @@ def epoch_curve(model_function, data, labels, validation_fraction,
 							for r, f in zip(test_results, evaluation_functions)]
 	epochs.append(epochs_to_try[-1])
 
-	print(test_results)
-	print(epochs)
+	#print(test_results)
+	#print(epochs)
 
 	for test_result in test_results:
 		plt.plot(epochs, test_result, color='blue')
@@ -341,7 +341,7 @@ def epoch_curve_generator(model_function, data, labels,
 		evaluation_functions = [evaluation_functions]
 
 	generator.fit(Xtrain)
-	trained_model = model_function(data.shape[1:])
+	trained_model = model_function()
 	# model = train(model_function(), epochs_to_try[0], Xtrain, Ytrain)
 	trained_model.fit_generator(generator.flow(Xtrain, Ytrain),
 				len(Xtrain)//batch_size, epochs = epochs_to_try[0])
