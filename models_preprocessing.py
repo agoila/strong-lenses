@@ -5,7 +5,7 @@ from keras.optimizers import Adam
 from keras.regularizers import l2
 
 
-def compiledConvnet(input_shape=(101, 101, 4)):
+def compiledConvnet(input_shape):
 	model = convnet(input_shape)
 	optimizer = Adam(lr = .0001, decay = 5e-5)
 	model.compile(optimizer=optimizer,
@@ -14,7 +14,7 @@ def compiledConvnet(input_shape=(101, 101, 4)):
 
 	return model
 
-def convnet(input_shape=(101, 101, 4)):
+def convnet(input_shape):
 	model = Sequential()
 	model.add(Conv2D(64, (3, 3), strides=(2,2), activation='softplus',
 					input_shape=input_shape))
@@ -29,7 +29,7 @@ def convnet(input_shape=(101, 101, 4)):
 	model.add(Dense(1, activation='sigmoid'))
 	return model
 
-def compiled_maxpool_simpler_1(input_shape=(101, 101, 4)):
+def compiled_maxpool_simpler_1(input_shape):
 	model = maxpool_simpler_1(input_shape)
 	optimizer = Adam(lr = .0001, decay = 5e-5)
 	model.compile(optimizer=optimizer,
@@ -38,7 +38,7 @@ def compiled_maxpool_simpler_1(input_shape=(101, 101, 4)):
 
 	return model
 
-def maxpool_simpler_1(input_shape=(101, 101, 4)):
+def maxpool_simpler_1(input_shape):
 	model = Sequential()
 	model.add(MaxPooling2D(pool_size=(2,2), strides=(2,2), input_shape=input_shape))
 	model.add(Conv2D(32, (3, 3), strides=(2,2), activation='softplus',
@@ -53,7 +53,7 @@ def maxpool_simpler_1(input_shape=(101, 101, 4)):
 	model.add(Dense(1, activation='sigmoid'))
 	return model
 
-def compiled_maxpool_convnet(input_shape=(101, 101, 4)):
+def compiled_maxpool_convnet(input_shape):
 	model = convnet(input_shape)
 	optimizer = Adam(lr = .0001, decay = 5e-5)
 	model.compile(optimizer=optimizer,
@@ -62,7 +62,7 @@ def compiled_maxpool_convnet(input_shape=(101, 101, 4)):
 
 	return model
 
-def maxpool_convnet(input_shape=(101, 101, 4)):
+def maxpool_convnet(input_shape):
 	model = Sequential()
 	model.add(MaxPooling2D(pool_size=(4,4), strides=(4,4), input_shape=input_shape))
 	model.add(Conv2D(64, (3, 3), strides=(2,2), activation='softplus'))
@@ -77,7 +77,7 @@ def maxpool_convnet(input_shape=(101, 101, 4)):
 	model.add(Dense(1, activation='sigmoid'))
 	return model
 
-def compiledRegularizedConvnet(input_shape=(101, 101, 4)):
+def compiledRegularizedConvnet(input_shape):
 	model = regularizedConvnet(input_shape)
 	optimizer = Adam(lr = .0001, decay = 5e-5)
 	model.compile(optimizer=optimizer,
@@ -87,7 +87,7 @@ def compiledRegularizedConvnet(input_shape=(101, 101, 4)):
 	return model
 
 reg = 0.3
-def regularizedConvnet(input_shape=(101, 101, 4)):
+def regularizedConvnet(input_shape):
 	model = Sequential()
 	model.add(Conv2D(64, (3, 3), strides=(2,2), activation='softplus',
 					input_shape=input_shape))

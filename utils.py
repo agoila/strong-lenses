@@ -177,7 +177,7 @@ def epoch_curve(model_function, data, labels, validation_fraction,
 	if type(evaluation_functions) is not list:
 		evaluation_functions = [evaluation_functions]
 
-	model = train(model_function(), epochs_to_try[0], Xtrain, Ytrain)
+	model = train(model_function(data.shape[1:]), epochs_to_try[0], Xtrain, Ytrain)
 
 	test_results = [[]] * len(evaluation_functions)
 	epochs = []
@@ -341,7 +341,7 @@ def epoch_curve_generator(model_function, data, labels,
 		evaluation_functions = [evaluation_functions]
 
 	generator.fit(Xtrain)
-	trained_model = model_function()
+	trained_model = model_function(data.shape[1:])
 	# model = train(model_function(), epochs_to_try[0], Xtrain, Ytrain)
 	trained_model.fit_generator(generator.flow(Xtrain, Ytrain),
 				len(Xtrain)//batch_size, epochs = epochs_to_try[0])
