@@ -90,7 +90,7 @@ def maxpool_convnet(input_shape=(101, 101, 3)):
     return model
 
 
-def compiledRegularizedConvnet(input_shape=(101, 101, 3)):
+def compiledRegularizedConvnet(input_shape=(101, 101, 4)):
     model = regularizedConvnet(input_shape)
     optimizer = Adam(lr=.0001, decay=5e-5)
     model.compile(optimizer=optimizer,
@@ -103,7 +103,7 @@ def compiledRegularizedConvnet(input_shape=(101, 101, 3)):
 reg = 0.3
 
 
-def regularizedConvnet(input_shape=(101, 101, 3)):
+def regularizedConvnet(input_shape=(101, 101, 4)):
     model = Sequential()
     model.add(Conv2D(64, (3, 3), strides=(2, 2), activation='softplus',
                      input_shape=input_shape))
