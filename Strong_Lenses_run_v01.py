@@ -25,4 +25,4 @@ labels = numpy.load('labels/classification.npy')
 
 generator = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
 
-utils.epoch_curve_generator(model_function, data, labels, generator, 32, 0.3, range(1, 41), [auroc, accuracy])
+utils.epoch_curve_generator(model_function, data, labels, generator, 6, 32, 0.3, range(1, 41), [auroc, accuracy])
