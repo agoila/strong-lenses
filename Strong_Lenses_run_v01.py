@@ -20,6 +20,7 @@ accuracy = metrics.accuracy
 text = metrics.basicTextMetrics
 
 data = numpy.load('data/imadjust.npy')
+#data = numpy.uint8(data)
 labels = numpy.load('labels/classification.npy')
 
 generator = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
