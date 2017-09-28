@@ -335,7 +335,7 @@ def learning_curve_generator(model_function, data, labels, fraction_test,
 
 
 def epoch_curve_generator(model_function, data, labels,
-                          generator, num_workers, batch_size, validation_fraction, epochs_to_try,
+                          generator, batch_size, validation_fraction, epochs_to_try,
                           evaluation_functions):
     Xtrain, Xtest, Ytrain, Ytest = train_test_split(data, labels,
                                                     test_size=validation_fraction)
@@ -350,7 +350,7 @@ def epoch_curve_generator(model_function, data, labels,
     trained_model = model_function()
     # model = train(model_function(), epochs_to_try[0], Xtrain, Ytrain)
     trained_model.fit_generator(generator.flow(Xtrain, Ytrain),
-                                len(Xtrain) // batch_size, epochs=epochs_to_try[0], workers=num_workers)
+                                len(Xtrain) // batch_size, epochs=epochs_to_try[0])
 
     test_results = [[]] * len(evaluation_functions)
     epochs = []
@@ -358,7 +358,7 @@ def epoch_curve_generator(model_function, data, labels,
         # y_pred = model.predict_classes(Xtest)
         # y_prob = model.predict(Xtest)
         y_prob = trained_model.predict_generator(generator.flow(Xtest, Ytest, ),
-                                                 len(Ytest) // batch_size, workers=num_workers)
+                                                 len(Ytest) // batch_size)
         y_pred = probabilistic_to_binary(y_prob, Ytest)
 
         test_results = [r + [f(Xtest, Ytest, y_pred, y_prob)]
@@ -368,10 +368,10 @@ def epoch_curve_generator(model_function, data, labels,
         num_epochs = epochs_to_try[i] - epochs_to_try[i - 1]
         # model = train(model, num_epochs, Xtrain, Ytrain)
         trained_model.fit_generator(generator.flow(Xtrain, Ytrain),
-                                    len(Ytrain) // batch_size, epochs=num_epochs, workers=num_workers)
+                                    len(Ytrain) // batch_size, epochs=num_epochs)
 
     y_prob = trained_model.predict_generator(generator.flow(Xtest, Ytest, ),
-                                             len(Ytest) // batch_size, workers=num_workers)
+                                             len(Ytest) // batch_size)
     y_pred = probabilistic_to_binary(y_prob, Ytest)
     test_results = [r + [f(Xtest, Ytest, y_pred, y_prob)]
                     for r, f in zip(test_results, evaluation_functions)]

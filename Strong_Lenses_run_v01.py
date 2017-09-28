@@ -23,6 +23,8 @@ data = numpy.load('data/imadjust.npy')
 #data = numpy.uint8(data)
 labels = numpy.load('labels/classification.npy')
 
-generator = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
+generator = ImageDataGenerator(zca_whitening = True, zca_epsilon = 1e-6)
 
-utils.epoch_curve_generator(model_function, data, labels, generator, 6, 32, 0.3, range(1, 41), [auroc, accuracy])
+#generator = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
+
+utils.epoch_curve_generator(model_function, data, labels, generator, 32, 0.3, range(1, 41), auroc)
