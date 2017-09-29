@@ -350,7 +350,7 @@ def epoch_curve_generator(model_function, data, labels,
     trained_model = model_function()
     # model = train(model_function(), epochs_to_try[0], Xtrain, Ytrain)
     trained_model.fit_generator(generator.flow(Xtrain, Ytrain),
-                                len(Xtrain) // batch_size, epochs=epochs_to_try[0])
+                                len(Xtrain) // batch_size, epochs=epochs_to_try[0], workers=16)
 
     test_results = [[]] * len(evaluation_functions)
     epochs = []
@@ -358,7 +358,7 @@ def epoch_curve_generator(model_function, data, labels,
         # y_pred = model.predict_classes(Xtest)
         # y_prob = model.predict(Xtest)
         y_prob = trained_model.predict_generator(generator.flow(Xtest, Ytest, ),
-                                                 len(Ytest) // batch_size)
+                                                 len(Ytest) // batch_size, workers=16)
         y_pred = probabilistic_to_binary(y_prob, Ytest)
 
         test_results = [r + [f(Xtest, Ytest, y_pred, y_prob)]
@@ -368,10 +368,10 @@ def epoch_curve_generator(model_function, data, labels,
         num_epochs = epochs_to_try[i] - epochs_to_try[i - 1]
         # model = train(model, num_epochs, Xtrain, Ytrain)
         trained_model.fit_generator(generator.flow(Xtrain, Ytrain),
-                                    len(Ytrain) // batch_size, epochs=num_epochs)
+                                    len(Ytrain) // batch_size, epochs=num_epochs, workers=16)
 
     y_prob = trained_model.predict_generator(generator.flow(Xtest, Ytest, ),
-                                             len(Ytest) // batch_size)
+                                             len(Ytest) // batch_size, workers=16)
     y_pred = probabilistic_to_binary(y_prob, Ytest)
     test_results = [r + [f(Xtest, Ytest, y_pred, y_prob)]
                     for r, f in zip(test_results, evaluation_functions)]

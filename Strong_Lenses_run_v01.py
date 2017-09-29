@@ -19,12 +19,14 @@ auroc = metrics.auroc
 accuracy = metrics.accuracy
 text = metrics.basicTextMetrics
 
-data = numpy.load('data/imadjust.npy')
+data = numpy.load('Simulated_Data/imadjust.npy')
 #data = numpy.uint8(data)
-labels = numpy.load('labels/classification.npy')
+labels = numpy.load('Simulated_Data/classification.npy')
 
-generator = ImageDataGenerator(zca_whitening = True, zca_epsilon = 1e-6)
+generator = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
+# zca_whitening = True
+#
 
 #generator = ImageDataGenerator(horizontal_flip=True, vertical_flip=True)
 
-utils.epoch_curve_generator(model_function, data, labels, generator, 32, 0.3, range(1, 41), auroc)
+utils.epoch_curve_generator(model_function, data, labels, generator, 32, 0.3, range(1, 41), [auroc, accuracy])
