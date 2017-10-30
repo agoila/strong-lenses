@@ -2,3 +2,5 @@ Simulated_Data
 .ipynb_checkpoints
 __pycache__
 debug.log
+data
+labels
