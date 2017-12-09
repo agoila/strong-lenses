@@ -17,7 +17,7 @@ def standardCompiledSimpConvNN():
 	return model
 
 #Best performance with Adam, default learning rate, learning rate decay of 5e-6, 25 epochs
-def simpConvNN(input_shape):
+def simpConvNN(input_shape=(64, 64, 3)):
 	model = Sequential()
 	model.add(MaxPooling2D(pool_size=(2,2), strides=(2,2), input_shape=input_shape))
 	#model went from 64x64x3 to 32x32x3
@@ -46,7 +46,7 @@ def standardCompiledSimpConvNNBatchFirst():
 
 	return model
 
-def simpConvNNBatchFirst(input_shape):
+def simpConvNNBatchFirst(input_shape=(64, 64, 3)):
 	model = Sequential()
 	model.add(BatchNormalization())
 	model.add(MaxPooling2D(pool_size=(2,2), strides=(2,2), input_shape=input_shape))
